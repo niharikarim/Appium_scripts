@@ -2,15 +2,16 @@ package appium_practice;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
+import io.appium.java_client.TouchAction;
 import io.appium.java_client.android.AndroidDriver;
 
-public class MultiApiDemo {
+public class DragnDrop {
 	public static void main(String[] args) throws MalformedURLException {
 		DesiredCapabilities dc = new DesiredCapabilities();
 		  // Common DC (Android or IOS)
@@ -29,13 +30,20 @@ public class MultiApiDemo {
 		  AndroidDriver driver = new AndroidDriver(url, dc);
 		  driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		  
-		  List<WebElement>options=driver.findElementsByClassName("android.widget.TextView");
-		 
+		  //find Elements
+		  driver.findElementByAccessibilityId("Views").click();
+		  driver.findElementByAccessibilityId("Drag and Drop").click();
 		  
-		  for(int i=1;i<options.size();i++) {
-			  System.out.println(options.get(i).getText());
-		  }
-	}
+		  WebElement src=driver.findElement(By.id("io.appium.android.apis:id/drag_dot_1"));
+		  WebElement dest=driver.findElement(By.id("io.appium.android.apis:id/drag_dot_3"));
+		  
+		  TouchAction ta=new TouchAction(driver);
+		  ta.longPress(src).waitAction(2000).moveTo(dest).release().perform();
+		  
+		  
+		  
+		  
+		  
 
-
+}
 }

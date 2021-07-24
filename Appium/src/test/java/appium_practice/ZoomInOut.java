@@ -2,15 +2,15 @@ package appium_practice;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import io.appium.java_client.android.AndroidDriver;
 
-public class MultiApiDemo {
+public class ZoomInOut {
 	public static void main(String[] args) throws MalformedURLException {
 		DesiredCapabilities dc = new DesiredCapabilities();
 		  // Common DC (Android or IOS)
@@ -20,8 +20,8 @@ public class MultiApiDemo {
 		  dc.setCapability("platformVersion", "9");
 		  dc.setCapability("UDID", "ZY224KFCGC");
 		  //DC for Android 
-		  dc.setCapability("appPackage", "io.appium.android.apis");
-		  dc.setCapability("appActivity", ".ApiDemos");
+		  dc.setCapability("appPackage", "com.davemorrissey.labs.subscaleview.sample");
+		  dc.setCapability("appActivity", ".MainActivity");
 		  
 		// Appium Server Port No.
 		  URL url = new URL("http://localhost:4723/wd/hub");
@@ -29,13 +29,23 @@ public class MultiApiDemo {
 		  AndroidDriver driver = new AndroidDriver(url, dc);
 		  driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		  
-		  List<WebElement>options=driver.findElementsByClassName("android.widget.TextView");
-		 
-		  
-		  for(int i=1;i<options.size();i++) {
-			  System.out.println(options.get(i).getText());
-		  }
-	}
+		  driver.findElement(By.id("com.davemorrissey.labs.subscaleview.sample:id/basicFeatures")).click();
+			
+			WebElement img = driver.findElement(By.id("com.davemorrissey.labs.subscaleview.sample:id/imageView"));
+			
+			driver.zoom(img);
+			
+			Thread.sleep(3000);
+			
+			driver.pinch(img);
 
+		}
+		}
+	
+
+
+
+
+	
 
 }
